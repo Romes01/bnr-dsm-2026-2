@@ -4,6 +4,11 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 
 @Document(collection = "alunos")
 public class Aluno {
@@ -11,11 +16,19 @@ public class Aluno {
     @Id
     private String id;
 
+    @NotBlank(message = "O nome do aluno é obrigatório.")
     private String nome;
+    @NotBlank(message = "O CPF é obrigatório.")
+    @Pattern(regexp = "\\d{11}", message = "O CPF deve conter exatamente 11 dígitos.")
     private String cpf;
+    @NotBlank(message = "O telefone é obrigatório.")
     private String telefone;
+    @NotBlank(message = "O e-mail é obrigatório.")
+    @Email(message = "O e-mail informado é inválido.")
     private String email;
 
+    @NotEmpty(message = "O aluno deve possuir pelo menos um endereço.")
+    @Valid
     private List<Endereco> enderecos;
 
     // Construtor genérico
